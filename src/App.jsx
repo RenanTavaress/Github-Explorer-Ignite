@@ -1,7 +1,6 @@
 import React from 'react'
+import './styles/global.scss'
 
 export function App(){
-   throw new Error('sjihfsjf')
-
    return <h1>Hello world</h1>
 }
