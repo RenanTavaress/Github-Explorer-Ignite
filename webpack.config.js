@@ -1,12 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 
-const iDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-   mode: iDevelopment ? 'development' : 'production',
-   devtool: iDevelopment ?'eval-source-map': 'source-map',
+   mode: isDevelopment ? 'development' : 'production',
+   devtool: isDevelopment ?'eval-source-map': 'source-map',
    entry: path.resolve(__dirname, 'src', 'index.jsx'),
    output: {
       path: path.resolve(__dirname, 'dist'),
@@ -19,16 +20,24 @@ module.exports = {
       static: path.join(__dirname, 'public')
    },
    plugins: [
+      isDevelopment && new RefreshWebpackPlugin(),
       new HtmlWebpackPlugin({
          template: path.resolve(__dirname, 'public', 'index.html')
       })
-   ],
+   ].filter(Boolean),
    module: {
       rules: [
          {
             test: /\.jsx$/,
             exclude: /node_modules/,
-            use: 'babel-loader',
+            use: {
+               loader: 'babel-loader',
+               options: {
+                  plugins: [
+                     isDevelopment&& require.resolve('react-refresh/babel')
+                  ].filter(Boolean)
+               }
+            },
          },
          {
             test: /\.scss$/,
