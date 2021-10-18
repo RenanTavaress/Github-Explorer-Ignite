@@ -1,17 +1,23 @@
-import React,{ useState } from "react"
+import React from "react"
+import '../styles/countincrement.scss'
 
 export function CountIncrement(){
-   const [counter, setCounter] = useState(0)
+   //const [counter, setCounter] = useState(0)
 
-   const increment = () => {
-      setCounter(counter + 1)
+   const repository = () => {
+      console.log('repository')
+   }
+
+   const starred = () => {
+      console.log('starred')
    }
 
    return (
       <div>
-         <h2>{counter}</h2>
+         <h2>Ola</h2>
 
-         <button type="button" onClick={increment}>Incrementar + 1</button>
+         <button type="button" onClick={repository}>repository</button>
+         <button type="button" onClick={starred}>starred</button>
       </div>
    )
 }
